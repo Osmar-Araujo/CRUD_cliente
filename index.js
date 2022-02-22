@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql2");
+const bodyParser = require('body-parser');
+const config = require("config");
+const cors = require("cors")
 
-const db = mysql.createPool({
-    host: "localhost",
-    user:"root",
-    password: "root",
-    database: "crud_cliente",
-});
+app.use(cors());
+app.use(bodyParser.json());
 
+const roteador = require ('./rotas/clientes')
+app.use('/api/clientes', roteador)
 
-app.listen(3001, () => {
+app.listen(config.get('api.porta'), () => {
     console.log("Servidor executando na porta 3001!");
 });

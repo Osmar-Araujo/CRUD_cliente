@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import './App.css';
+import Axios from "axios";
 
 function App() {
   const [values,setValues] = useState();
@@ -11,8 +12,18 @@ function App() {
   };
 
   const handleClickButton = () => {
-    console.log(values);
-  }
+    Axios.post("http://localhost:3001/api/clientes",{
+    nome: values.nome,
+    cpf: values.cpf,
+    tel: values.tel,
+    email: values.email,
+    dataNasc: values.dataNasc,
+    genero: values.genero,
+    senha: values.senha
+  }).then((res) => {
+    console.log(res);
+  });
+  };
   return (
     <div className="app--container">
       <div className='register--container'>
@@ -35,7 +46,7 @@ function App() {
           ></input>
            <input
             type="tel"
-            name="fone"
+            name="tel"
             pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
             className="register--input"
             placeholder="11-99508-5696"
@@ -52,7 +63,7 @@ function App() {
           ></input>
           <input
             type="date"
-            name="dtNasc"
+            name="dataNasc"
             className="register--input"
             placeholder="Data de Nascimento"
             onChange={handleChangeValues}
